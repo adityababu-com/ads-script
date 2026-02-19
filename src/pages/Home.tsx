@@ -75,7 +75,7 @@ export const Home = () => {
                         <span className="md:hidden text-xs font-bold text-gray-500">Swipe ← →</span>
                     </div>
 
-                    <div className="md:hidden -mx-6 px-6 overflow-x-auto pb-3 snap-x snap-mandatory touch-pan-x [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    <div className="md:hidden -mx-6 px-6 overflow-x-auto pb-3 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                         <div className="flex gap-4 w-max pr-6">
                             {girlVisuals.map((visual, index) => (
                                 <article
