@@ -24,6 +24,8 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
             ghost: 'hover:bg-tallpop-pink/10 text-tallpop-dark',
         };
 
+        const disabledStyles = 'opacity-50 cursor-not-allowed';
+
         const sizes = {
             sm: 'px-4 py-2 text-sm',
             md: 'px-6 py-3 text-base',
@@ -33,14 +35,16 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         return (
             <motion.button
                 ref={ref}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={props.disabled ? {} : { scale: 1.05 }}
+                whileTap={props.disabled ? {} : { scale: 0.95 }}
                 className={cn(
                     'rounded-full transition-all duration-300 flex items-center justify-center gap-2',
                     variants[variant],
                     sizes[size],
+                    props.disabled && disabledStyles,
                     className
                 )}
+                disabled={props.disabled}
                 {...(props as MotionButtonProps)}
             >
                 {children}

@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { useCart } from '../context/CartContext';
 import { Button } from '../components/ui/Button';
-import { ArrowLeft, CheckCircle } from 'lucide-react';
+import { ArrowLeft, CheckCircle, Loader2 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { supabase } from '../lib/supabase';
 
 export const Checkout = () => {
-    const { items, cartTotal } = useCart();
+    const { items, cartTotal, clearCart } = useCart();
     const [formData, setFormData] = useState({
         email: '',
         firstName: '',
@@ -17,17 +18,52 @@ export const Checkout = () => {
         phone: ''
     });
     const [isSuccess, setIsSuccess] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Simulate API call
-        setTimeout(() => {
-            setIsSuccess(true);
-        }, 1500);
+        setIsLoading(true);
+
+        try {
+            const orderData = {
+                id: crypto.randomUUID(),
+                customer_name: `${formData.firstName} ${formData.lastName}`,
+                email: formData.email,
+                address: formData.address,
+                city: formData.city,
+                zip: formData.zip,
+                phone: formData.phone,
+                items: items.map(item => ({
+                    id: item.id,
+                    name: item.name,
+                    price: item.price,
+                    quantity: item.quantity
+                })),
+                total: cartTotal,
+                status: 'pending'
+            };
+
+            const { error } = await supabase
+                .from('orders')
+                .insert(orderData);
+
+            if (error) {
+                console.error('Order error:', error);
+                alert('Failed to place order. Please try again.');
+            } else {
+                clearCart();
+                setIsSuccess(true);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            alert('Something went wrong. Please try again.');
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     if (isSuccess) {
@@ -149,8 +185,15 @@ export const Checkout = () => {
                             />
                         </div>
 
-                        <Button type="submit" size="lg" className="w-full mt-4">
-                            Pay ₹{cartTotal.toLocaleString()}
+                        <Button type="submit" size="lg" className="w-full mt-4" disabled={isLoading}>
+                            {isLoading ? (
+                                <>
+                                    <Loader2 size={20} className="animate-spin mr-2" />
+                                    Processing...
+                                </>
+                            ) : (
+                                `Pay ₹${cartTotal.toLocaleString()}`
+                            )}
                         </Button>
 
                         <p className="text-xs text-center text-gray-400">
