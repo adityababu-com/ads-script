@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, ShoppingBag, User } from 'lucide-react';
+import { Menu, X, ShoppingBag, User, LogOut } from 'lucide-react';
 import { Button } from '../ui/Button';
 import { useCart } from '../../context/CartContext';
+import { useAuth } from '../../context/AuthContext';
 
 export const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
     const location = useLocation();
     const { cartCount } = useCart();
+    const { user, signOut } = useAuth();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -50,9 +52,20 @@ export const Navbar = () => {
                             {link.name}
                         </Link>
                     ))}
-                    <Button variant="ghost" size="sm" className="p-2">
-                        <User size={20} />
-                    </Button>
+                    {user ? (
+                        <div className="flex items-center gap-3">
+                            <span className="text-sm text-gray-600">{user.email}</span>
+                            <Button variant="ghost" size="sm" onClick={signOut}>
+                                <LogOut size={20} />
+                            </Button>
+                        </div>
+                    ) : (
+                        <Link to="/login">
+                            <Button variant="ghost" size="sm" className="p-2">
+                                <User size={20} />
+                            </Button>
+                        </Link>
+                    )}
                     <Link to="/cart">
                         <Button variant="primary" size="sm" icon={<ShoppingBag size={18} />}>
                             Cart ({cartCount})
