@@ -75,32 +75,29 @@ export const Home = () => {
                         <span className="md:hidden text-xs font-bold text-gray-500">Swipe ← →</span>
                     </div>
 
-                    <div className="md:hidden grid grid-cols-1 gap-4 px-4">
-                        {girlVisuals.map((visual, index) => (
-                            <Link
-                                to="/shop"
-                                key={visual.alt}
-                                className="relative w-full h-[60vh] rounded-2xl overflow-hidden border border-white/80 bg-white shadow-lg"
-                            >
-                                <img
-                                    src={visual.src}
-                                    alt={visual.alt}
-                                    loading={index === 0 ? 'eager' : 'lazy'}
-                                    fetchPriority={index === 0 ? 'high' : 'auto'}
-                                    decoding="async"
-                                    sizes="100vw"
-                                    className="w-full h-full object-cover"
-                                />
-                                <div className="absolute inset-x-0 bottom-0 p-4 bg-gradient-to-t from-black/55 via-black/10 to-transparent flex items-end justify-between">
-                                    <span className="inline-block rounded-full bg-white/90 border border-white/80 px-3 py-1 text-xs font-bold text-tallpop-dark">
-                                        {visual.tag}
-                                    </span>
-                                    <span className="inline-flex items-center gap-1 text-white text-xs font-bold">
-                                        Shop Now <ArrowRight size={14} />
-                                    </span>
-                                </div>
-                            </Link>
-                        ))}
+                    <div className="md:hidden -mx-4 px-4 overflow-x-auto snap-x snap-mandatory scrollbar-hide">
+                        <div className="flex gap-3 w-max">
+                            {girlVisuals.map((visual, index) => (
+                                <Link
+                                    to="/shop"
+                                    key={visual.alt}
+                                    className="w-[85vw] h-[70vh] shrink-0 snap-center rounded-2xl overflow-hidden border border-white/80 bg-white shadow-lg"
+                                >
+                                    <img
+                                        src={visual.src}
+                                        alt={visual.alt}
+                                        loading={index === 0 ? 'eager' : 'lazy'}
+                                        decoding="async"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent">
+                                        <span className="inline-block rounded-full bg-white/90 px-3 py-1 text-xs font-bold text-tallpop-dark">
+                                            {visual.tag}
+                                        </span>
+                                    </div>
+                                </Link>
+                            ))}
+                        </div>
                     </div>
 
                     <div className="hidden md:grid grid-cols-3 gap-5">
@@ -130,7 +127,7 @@ export const Home = () => {
                 </div>
             </section>
 
-            <section className="relative min-h-[92vh] md:min-h-screen pt-8 md:pt-14 pb-16 flex items-center">
+            <section className="relative min-h-[92vh] md:min-h-screen pt-8 md:pt-14 pb-16 flex items-center hidden md:block">
                 <motion.div
                     animate={{ y: [0, -22, 0] }}
                     transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
