@@ -9,63 +9,63 @@ export const Cart = () => {
 
     if (items.length === 0) {
         return (
-            <div className="pt-32 pb-20 container mx-auto px-6 text-center">
-                <div className="flex justify-center mb-6 text-tallpop-pink/30">
-                    <ShoppingBag size={80} />
+            <div className="pt-24 pb-16 md:pt-32 md:pb-20 container mx-auto px-4 md:px-6 text-center">
+                <div className="flex justify-center mb-4 md:mb-6 text-tallpop-pink/30">
+                    <ShoppingBag size={64} />
                 </div>
-                <h2 className="text-3xl font-display font-bold mb-4">Your bag is empty</h2>
-                <p className="text-gray-500 mb-8">Looks like you haven't added any glow-up essentials yet.</p>
+                <h2 className="text-2xl md:text-3xl font-display font-bold mb-3 md:mb-4">Your bag is empty</h2>
+                <p className="text-gray-500 mb-6 md:mb-8 text-sm md:text-base px-4 md:px-0">Looks like you haven't added any glow-up essentials yet.</p>
                 <Link to="/">
-                    <Button>Start Shopping</Button>
+                    <Button className="text-sm md:text-base">Start Shopping</Button>
                 </Link>
             </div>
         );
     }
 
     return (
-        <div className="pt-32 pb-20 container mx-auto px-6">
-            <h1 className="text-4xl font-display font-bold mb-8 text-center">Your Bag</h1>
+        <div className="pt-20 pb-16 md:pt-32 md:pb-20 container mx-auto px-4 md:px-6">
+            <h1 className="text-2xl md:text-4xl font-display font-bold mb-6 md:mb-8 text-center">Your Bag</h1>
 
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-12">
                 {/* Cart Items */}
-                <div className="lg:col-span-2 space-y-6">
+                <div className="lg:col-span-2 space-y-4 md:space-y-6">
                     {items.map(item => (
                         <motion.div
                             layout
                             key={item.id}
-                            className="flex gap-6 p-4 rounded-2xl bg-white border border-gray-100 shadow-sm"
+                            className="flex gap-3 md:gap-6 p-3 md:p-4 rounded-xl md:rounded-2xl bg-white border border-gray-100 shadow-sm"
                         >
-                            <div className="w-24 h-24 rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
+                            <div className="w-20 h-20 md:w-24 md:h-24 rounded-lg md:rounded-xl overflow-hidden bg-gray-100 flex-shrink-0">
                                 <img src={item.image} alt={item.name} className="w-full h-full object-cover" />
                             </div>
 
                             <div className="flex-1 flex flex-col justify-between">
                                 <div className="flex justify-between items-start">
                                     <div>
-                                        <h3 className="font-bold text-lg">{item.name}</h3>
-                                        <p className="text-sm text-gray-500">30 Sachets</p>
+                                        <h3 className="font-bold text-sm md:text-lg">{item.name}</h3>
+                                        <p className="text-xs md:text-sm text-gray-500">30 Sachets</p>
                                     </div>
                                     <button
                                         onClick={() => removeItem(item.id)}
-                                        className="text-gray-400 hover:text-red-500 transition-colors"
+                                        className="text-gray-400 hover:text-red-500 transition-colors p-1"
                                     >
-                                        <Trash2 size={20} />
+                                        <Trash2 size={18} />
                                     </button>
                                 </div>
 
                                 <div className="flex justify-between items-end">
-                                    <div className="flex items-center border border-gray-200 rounded-full h-8">
+                                    <div className="flex items-center border border-gray-200 rounded-full h-7 md:h-8">
                                         <button
                                             onClick={() => updateQuantity(item.id, -1)}
-                                            className="px-3 hover:text-tallpop-pink"
+                                            className="px-2 md:px-3 hover:text-tallpop-pink text-sm"
                                         >-</button>
-                                        <span className="w-6 text-center text-sm font-bold">{item.quantity}</span>
+                                        <span className="w-5 md:w-6 text-center text-xs md:text-sm font-bold">{item.quantity}</span>
                                         <button
                                             onClick={() => updateQuantity(item.id, 1)}
-                                            className="px-3 hover:text-tallpop-pink"
+                                            className="px-2 md:px-3 hover:text-tallpop-pink text-sm"
                                         >+</button>
                                     </div>
-                                    <div className="font-bold text-lg">₹{(item.price * item.quantity).toLocaleString()}</div>
+                                    <div className="font-bold text-sm md:text-lg">₹{(item.price * item.quantity).toLocaleString()}</div>
                                 </div>
                             </div>
                         </motion.div>
@@ -74,7 +74,7 @@ export const Cart = () => {
 
                 {/* Order Summary */}
                 <div className="lg:col-span-1">
-                    <div className="bg-white p-8 rounded-3xl shadow-sm border border-gray-100 sticky top-32">
+                    <div className="bg-white p-4 md:p-8 rounded-2xl md:rounded-3xl shadow-sm border border-gray-100 sticky top-24 md:top-32">
                         <h3 className="font-bold text-xl mb-6">Order Summary</h3>
 
                         <div className="space-y-4 mb-6">
